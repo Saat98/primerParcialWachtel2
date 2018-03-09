@@ -18,7 +18,7 @@ def one_simplex_step_blend(A,A_N,A_B,A_B_inv,b,c,B,N):
         return ("Solución",np.dot(A_B_inv,b),np.dot(np.transpose(lambda_costos),b))
     
     entrada=-1
-    for i in len(r_N):
+    for i in range(len(r_N)):
         if r_N[i]>0:
             entrada=i
             break
@@ -30,16 +30,16 @@ def one_simplex_step_blend(A,A_N,A_B,A_B_inv,b,c,B,N):
         return ("No acotado")
     
     salida=-1
-    for i in len(h):
+    for i in range(len(h)):
         if H_e[i]>0:
             salida=i
             break
     
-    for i in len(B):
+    for i in range(len(B)):
         if B[i]==salida:
             B[i]=entrada
     
-    for i in len(N):
+    for i in range(len(N)):
         if N[i]==entrada:
             N[i]=salida
             
