@@ -53,8 +53,8 @@ def mSimplexFaseII(A,b,c):
     A=np.hstack((A,np.eye(basica)))
     c=np.hstack((c,np.zeros(basica)))
     
-    N=np.arange(0,A.shape[0])
-    B=np.arange(A.shape[0],A.shape[0]+basica)
+    N=np.arange(0,A.shape[1]-basica)
+    B=np.arange(A.shape[1]-basica,A.shape[1])
     
     conteo=0
     while True:
@@ -66,10 +66,10 @@ def mSimplexFaseII(A,b,c):
             for i in range(len(B)):
                 x[B[i]]=receiver[1][i]
                 
-            if min(x)<0 or max(abs(np.dot(A,np.transpose(x))-b))<1e-12:
+            if min(x)<0 or max(abs(np.dot(A,np.transpose(x))-b))>1e-12:
                 return(None,None,-1,conteo)
             
-            return(receiver[1],receiver[2],0,conteo)
+            return(x[0:basica],receiver[2],0,conteo)
         elif receiver[0]=="No acotado":
             return (None,None,1,conteo)
  
