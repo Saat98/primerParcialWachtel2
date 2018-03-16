@@ -30,13 +30,14 @@ def one_simplex_step_blend(A,b,c,B,N):
     H_e=np.dot(A_B_inv,A[:,entrada])
     
     if(max(H_e)<=0):
-        return ("No acotado")
+        return ("No acotado",None)
     
     salida=-1
+    cociente=1000000000
     for i in range(len(h)):
-        if H_e[i]>0:
+        if H_e[i]>0 and h[i]/H_e[i]<cociente:
+            cociente=h[i]/H_e[i]
             salida=B[i]
-            break
     
     for i in range(len(B)):
         if B[i]==salida:
@@ -65,9 +66,6 @@ def mSimplexFaseII(A,b,c):
             x=np.zeros(A.shape[1])
             for i in range(len(B)):
                 x[B[i]]=receiver[1][i]
-                
-            if min(x)<0 or max(abs(np.dot(A,np.transpose(x))-b))>1e-12:
-                return(None,None,-1,conteo)
             
             return(x[0:basica],receiver[2],0,conteo)
         elif receiver[0]=="No acotado":
